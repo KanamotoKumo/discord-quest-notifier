@@ -1,0 +1,44 @@
+{
+  "name": "🎮 Discord Quests Notifier",
+  "new_quest": "🆕 NEW QUEST",
+  "updated_quest": "♻️ QUEST UPDATED",
+  "quest_info": "📋 Quest Information",
+  "duration": "⏰ Duration",
+  "game": "🎮 Game",
+  "application": "🔗 Application",
+  "tasks": "✅ Tasks",
+  "task_condition": {
+    "and": "**Complete ALL tasks:**",
+    "or": "**Complete ANY of these tasks:**"
+  },
+  "rewards_title": "🎁 Rewards",
+  "reward_type": "Type",
+  "reward_name": {
+    "normal": "Name",
+    "extra": "Premium Reward"
+  },
+  "reward_expires": "Expires",
+  "decor_expires": "Decoration Expires",
+  "sku_id": "SKU ID",
+  "quest_id": "Quest ID",
+  "error": {
+    "new_quest": "Unknown Quest",
+    "game_name": "Unknown Game",
+    "game_publisher": "Unknown Publisher",
+    "reward": "Unknown Reward",
+    "reward_type": "Unknown Type"
+  },
+  "rewards": {
+    "1": "Nitro",
+    "2": "Nitro Classic",
+    "3": "Decoration",
+    "4": "Premium Orbs"
+  },
+  "changes_detected": "📝 Changes Detected",
+  "expires_at_changed": "⏰ Expiration Date",
+  "starts_at_changed": "📅 Start Date",
+  "reward_changed": "🎁 Reward",
+  "task_count_changed": "✅ Task Count",
+  "changed_from": "from",
+  "changed_to": "to"
+} 
