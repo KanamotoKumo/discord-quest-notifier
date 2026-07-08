@@ -1,0 +1,21 @@
+ {
+  "name": "discord-quests-notifier",
+  "version": "2.0.0",
+  "description": "Advanced Discord Quests tracker with update detection and atomic state management",
+  "type": "module",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "node src/main.js",
+    "dev": "node src/main.js"
+  },
+  "keywords": [
+    "discord",
+    "quests",
+    "tracker",
+    "webhook",
+    "notifications"
+  ],
+  "author": "Korchi Community",
+  "license": "MIT",
+  "dependencies": {}
+}
