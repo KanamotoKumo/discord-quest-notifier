@@ -1,0 +1,492 @@
+{
+  "quests": {
+    "1519537307718520912": {
+      "id": "1519537307718520912",
+      "config": {
+        "id": "1519537307718520912",
+        "config_version": 2,
+        "starts_at": "2026-06-30T17:00:00+00:00",
+        "expires_at": "2026-07-14T00:00:00+00:00",
+        "features": [
+          15
+        ],
+        "application": {
+          "link": "https://store.steampowered.com/app/2507950?utm_source=discordquest",
+          "id": "1314682894106497096",
+          "name": "Delta Force"
+        },
+        "assets": {
+          "hero": "quests/1519537307718520912/1521535551637946599.jpg",
+          "hero_video": "quests/1519537307718520912/1521535445064876233_720.mp4",
+          "quest_bar_hero_blurhash": "0AgGDIBgLYgct3dqiIgTDRrRgA==",
+          "quest_bar_hero": "quests/1519537307718520912/1521535418594754641.jpg",
+          "quest_bar_hero_video": "quests/1519537307718520912/1521535459489222908_720.mp4",
+          "game_tile": "1519541505264451655.png",
+          "logotype": "1521168404357058631.png",
+          "game_tile_light": "quests/1519537307718520912/1519540250509049957.png",
+          "game_tile_dark": "quests/1519537307718520912/1519540250509049957.png",
+          "logotype_light": "quests/1519537307718520912/1521168383956091040.png",
+          "logotype_dark": "quests/1519537307718520912/1519540248462229554.png"
+        },
+        "colors": {
+          "primary": "#4752C4",
+          "secondary": "#000000"
+        },
+        "messages": {
+          "quest_name": "New Season Meltdown",
+          "game_title": "Delta Force",
+          "game_publisher": "Team Jade"
+        },
+        "task_config_v2": {
+          "tasks": {
+            "PLAY_ON_DESKTOP": {
+              "type": "PLAY_ON_DESKTOP",
+              "target": 900,
+              "applications": [
+                {
+                  "id": "1314682894106497096"
+                }
+              ]
+            },
+            "PLAY_ON_XBOX": {
+              "type": "PLAY_ON_XBOX",
+              "target": 900,
+              "applications": [
+                {
+                  "id": "1314682894106497096"
+                }
+              ],
+              "external_ids": [
+                "1668346801",
+                "1854680102"
+              ]
+            },
+            "PLAY_ON_PLAYSTATION": {
+              "type": "PLAY_ON_PLAYSTATION",
+              "target": 900,
+              "applications": [
+                {
+                  "id": "1314682894106497096"
+                }
+              ],
+              "external_ids": [
+                "PPSA28881_00",
+                "PPSA28883_00",
+                "PPSA28884_00",
+                "PPSA28882_00"
+              ]
+            }
+          },
+          "join_operator": "or"
+        },
+        "rewards_config": {
+          "assignment_method": 1,
+          "rewards": [
+            {
+              "type": 4,
+              "sku_id": "1287881739531976815",
+              "messages": {
+                "name": "700 Orbs",
+                "name_with_article": "700 Orbs",
+                "redemption_instructions_by_platform": {
+                  "0": "PLACEHOLDER"
+                }
+              },
+              "orb_quantity": 700,
+              "premium_orb_quantity": 840
+            }
+          ],
+          "rewards_expire_at": "2026-08-13T00:00:00+00:00",
+          "platforms": [
+            0
+          ]
+        },
+        "share_policy": "shareable_everywhere",
+        "cta_config": {
+          "link": "https://store.steampowered.com/app/2507950?utm_source=discordquest",
+          "button_label": "Phát Ngay"
+        }
+      },
+      "hash": "eyJleHBpcmVzX2F0IjoiMjAyNi0wNy0xNFQwMDowMDowMCswMDowMCIsInN0YXJ0c19hdCI6IjIwMjYtMDYtMzBUMTc6MDA6MDArMDA6MDAiLCJyZXdhcmRfZXhwaXJlcyI6IjIwMjYtMDgtMTNUMDA6MDA6MDArMDA6MDAiLCJ0YXNrX2NvdW50IjozLCJyZXdhcmRfdHlwZSI6NCwic2t1X2lkIjoiMTI4Nzg4MTczOTUzMTk3NjgxNSJ9",
+      "starts_at": "2026-06-30T17:00:00+00:00",
+      "expires_at": "2026-08-13T00:00:00+00:00",
+      "sent_at": "2026-07-09T13:55:51.734Z",
+      "type": "new"
+    },
+    "1521041366774190240": {
+      "id": "1521041366774190240",
+      "config": {
+        "id": "1521041366774190240",
+        "config_version": 2,
+        "starts_at": "2026-07-01T07:00:00+00:00",
+        "expires_at": "2026-07-11T06:59:00+00:00",
+        "features": [
+          15
+        ],
+        "application": {
+          "link": "https://store.steampowered.com/app/3564740/480?utm_source=DiscordOrbs",
+          "id": "1437509662303059998",
+          "name": "Where Winds Meet"
+        },
+        "assets": {
+          "hero": "quests/1521041366774190240/1521052691000983643.jpg",
+          "hero_video": "quests/1521041366774190240/1521049301185200139_720.mp4",
+          "quest_bar_hero_blurhash": "k/cJCoIIuVN/c2l57jBdDKQ=",
+          "quest_bar_hero": "quests/1521041366774190240/1521052691000983643.jpg",
+          "quest_bar_hero_video": "quests/1521041366774190240/1521049288371601468_720.mp4",
+          "game_tile": "1521052784877637652.png",
+          "logotype": "1521052781945946142.png",
+          "game_tile_light": "quests/1521041366774190240/1521047844239310962.png",
+          "game_tile_dark": "quests/1521041366774190240/1521047844239310962.png",
+          "logotype_light": "quests/1521041366774190240/1521047842247016581.png",
+          "logotype_dark": "quests/1521041366774190240/1521047842247016581.png"
+        },
+        "colors": {
+          "primary": "#4752C4",
+          "secondary": "#000000"
+        },
+        "messages": {
+          "quest_name": "Where Winds Meet Ver 1.8",
+          "game_title": "Where Winds Meet",
+          "game_publisher": "NETEASE"
+        },
+        "task_config_v2": {
+          "tasks": {
+            "PLAY_ON_DESKTOP": {
+              "type": "PLAY_ON_DESKTOP",
+              "target": 900,
+              "applications": [
+                {
+                  "id": "1437509662303059998"
+                }
+              ]
+            },
+            "PLAY_ON_PLAYSTATION": {
+              "type": "PLAY_ON_PLAYSTATION",
+              "target": 900,
+              "applications": [
+                {
+                  "id": "1437509662303059998"
+                }
+              ],
+              "external_ids": [
+                "PPSA23355_00"
+              ]
+            }
+          },
+          "join_operator": "or"
+        },
+        "rewards_config": {
+          "assignment_method": 1,
+          "rewards": [
+            {
+              "type": 4,
+              "sku_id": "1287881739531976815",
+              "messages": {
+                "name": "700 Orbs",
+                "name_with_article": "700 Orbs",
+                "redemption_instructions_by_platform": {
+                  "0": "PLACEHOLDER"
+                }
+              },
+              "orb_quantity": 700,
+              "premium_orb_quantity": 840
+            }
+          ],
+          "rewards_expire_at": "2026-08-10T06:59:00+00:00",
+          "platforms": [
+            0
+          ]
+        },
+        "share_policy": "shareable_everywhere",
+        "cta_config": {
+          "link": "https://store.steampowered.com/app/3564740/480?utm_source=DiscordOrbs",
+          "button_label": "Phát Ngay"
+        }
+      },
+      "hash": "eyJleHBpcmVzX2F0IjoiMjAyNi0wNy0xMVQwNjo1OTowMCswMDowMCIsInN0YXJ0c19hdCI6IjIwMjYtMDctMDFUMDc6MDA6MDArMDA6MDAiLCJyZXdhcmRfZXhwaXJlcyI6IjIwMjYtMDgtMTBUMDY6NTk6MDArMDA6MDAiLCJ0YXNrX2NvdW50IjoyLCJyZXdhcmRfdHlwZSI6NCwic2t1X2lkIjoiMTI4Nzg4MTczOTUzMTk3NjgxNSJ9",
+      "starts_at": "2026-07-01T07:00:00+00:00",
+      "expires_at": "2026-08-10T06:59:00+00:00",
+      "sent_at": "2026-07-09T13:55:53.285Z",
+      "type": "new"
+    },
+    "1521260970586931220": {
+      "id": "1521260970586931220",
+      "config": {
+        "id": "1521260970586931220",
+        "config_version": 2,
+        "starts_at": "2026-07-03T17:00:00+00:00",
+        "expires_at": "2026-07-20T06:59:00+00:00",
+        "features": [
+          15
+        ],
+        "application": {
+          "link": "https://game.ea.com/redirect?campaignName=FC26_UA_US_EA_SOC_DIS_WC-INCR-AZ&caudience=C3-FC-Competitor&ccreative=S-QUEST-MXUS&caudienceid=1521260970586931222",
+          "id": "1421154726023532544",
+          "name": "EA SPORTS FC 26"
+        },
+        "assets": {
+          "hero": "quests/1521260970586931220/1521261520770699344.jpg",
+          "quest_bar_hero_blurhash": "kOgFLISFaYhgl4ZSmGqHcHf3dw==",
+          "quest_bar_hero": "quests/1521260970586931220/1521261481491169321.jpg",
+          "game_tile": "1521261739696460037.png",
+          "logotype": "1521261738589159575.png",
+          "game_tile_light": "quests/1521260970586931220/1521261349785702480.png",
+          "game_tile_dark": "quests/1521260970586931220/1521261349873778728.png",
+          "logotype_light": "quests/1521260970586931220/1521261349731041460.png",
+          "logotype_dark": "quests/1521260970586931220/1521261349722914907.png"
+        },
+        "colors": {
+          "primary": "#4752C4",
+          "secondary": "#000000"
+        },
+        "messages": {
+          "quest_name": "EAFC x The World's Game",
+          "game_title": "EA SPORTS FC 26",
+          "game_publisher": "Electronic Arts"
+        },
+        "task_config_v2": {
+          "tasks": {
+            "PLAY_ON_DESKTOP": {
+              "type": "PLAY_ON_DESKTOP",
+              "target": 900,
+              "applications": [
+                {
+                  "id": "1421154726023532544"
+                }
+              ]
+            },
+            "PLAY_ON_XBOX": {
+              "type": "PLAY_ON_XBOX",
+              "target": 900,
+              "applications": [
+                {
+                  "id": "1421154726023532544"
+                }
+              ],
+              "external_ids": [
+                "1909324253"
+              ]
+            },
+            "PLAY_ON_PLAYSTATION": {
+              "type": "PLAY_ON_PLAYSTATION",
+              "target": 900,
+              "applications": [
+                {
+                  "id": "1421154726023532544"
+                }
+              ],
+              "external_ids": [
+                "PPSA27360_00",
+                "CUSA52342_00"
+              ]
+            }
+          },
+          "join_operator": "or"
+        },
+        "rewards_config": {
+          "assignment_method": 1,
+          "rewards": [
+            {
+              "type": 4,
+              "sku_id": "1287881739531976815",
+              "messages": {
+                "name": "700 Orbs",
+                "name_with_article": "700 Orbs",
+                "redemption_instructions_by_platform": {
+                  "0": "PLACEHOLDER"
+                }
+              },
+              "orb_quantity": 700,
+              "premium_orb_quantity": 840
+            }
+          ],
+          "rewards_expire_at": "2026-08-19T06:59:00+00:00",
+          "platforms": [
+            0
+          ]
+        },
+        "share_policy": "shareable_everywhere",
+        "cta_config": {
+          "link": "https://game.ea.com/redirect?campaignName=FC26_UA_US_EA_SOC_DIS_WC-INCR-AZ&caudience=C3-FC-Competitor&ccreative=S-QUEST-MXUS&caudienceid=1521260970586931222",
+          "button_label": "Phát Ngay"
+        }
+      },
+      "hash": "eyJleHBpcmVzX2F0IjoiMjAyNi0wNy0yMFQwNjo1OTowMCswMDowMCIsInN0YXJ0c19hdCI6IjIwMjYtMDctMDNUMTc6MDA6MDArMDA6MDAiLCJyZXdhcmRfZXhwaXJlcyI6IjIwMjYtMDgtMTlUMDY6NTk6MDArMDA6MDAiLCJ0YXNrX2NvdW50IjozLCJyZXdhcmRfdHlwZSI6NCwic2t1X2lkIjoiMTI4Nzg4MTczOTUzMTk3NjgxNSJ9",
+      "starts_at": "2026-07-03T17:00:00+00:00",
+      "expires_at": "2026-08-19T06:59:00+00:00",
+      "sent_at": "2026-07-09T13:55:54.691Z",
+      "type": "new"
+    },
+    "1521699040776159282": {
+      "id": "1521699040776159282",
+      "config": {
+        "id": "1521699040776159282",
+        "config_version": 2,
+        "starts_at": "2026-07-08T17:00:00+00:00",
+        "expires_at": "2026-07-16T00:00:00+00:00",
+        "features": [
+          15
+        ],
+        "application": {
+          "link": "https://nte.onelink.me/RX86/Event_West_12",
+          "id": "1470616226995765409",
+          "name": "Neverness to Everness"
+        },
+        "assets": {
+          "hero": "quests/1521699040776159282/1521701197290143936.jpg",
+          "hero_video": "quests/1521699040776159282/1524273833987543050.mp4",
+          "quest_bar_hero_blurhash": "YgcKCoR/n1aHd3Z3oqBqQHg=",
+          "quest_bar_hero": "quests/1521699040776159282/1521701197239812166.jpg",
+          "quest_bar_hero_video": "quests/1521699040776159282/1524273833282895983.mp4",
+          "game_tile": "1521701516283744326.jpeg",
+          "logotype": "1521701787801747568.png",
+          "game_tile_light": "quests/1521699040776159282/1521701197248200794.jpeg",
+          "game_tile_dark": "quests/1521699040776159282/1521701197248200794.jpeg",
+          "logotype_light": "quests/1521699040776159282/1521701197248200795.png",
+          "logotype_dark": "quests/1521699040776159282/1521701197248200795.png"
+        },
+        "colors": {
+          "primary": "#4752C4",
+          "secondary": "#000000"
+        },
+        "messages": {
+          "quest_name": "NTE 1.2 Version",
+          "game_title": "NTE: Neverness to Everness",
+          "game_publisher": "Perfect World Games"
+        },
+        "task_config_v2": {
+          "tasks": {
+            "PLAY_ON_DESKTOP": {
+              "type": "PLAY_ON_DESKTOP",
+              "target": 900,
+              "applications": [
+                {
+                  "id": "1470616226995765409"
+                }
+              ]
+            }
+          },
+          "join_operator": "or"
+        },
+        "rewards_config": {
+          "assignment_method": 1,
+          "rewards": [
+            {
+              "type": 4,
+              "sku_id": "1287881739531976815",
+              "messages": {
+                "name": "700 Orbs",
+                "name_with_article": "700 Orbs",
+                "redemption_instructions_by_platform": {
+                  "0": "PLACEHOLDER"
+                }
+              },
+              "orb_quantity": 700,
+              "premium_orb_quantity": 840
+            }
+          ],
+          "rewards_expire_at": "2026-08-15T00:00:00+00:00",
+          "platforms": [
+            0
+          ]
+        },
+        "share_policy": "shareable_everywhere",
+        "cta_config": {
+          "link": "https://nte.onelink.me/RX86/Event_West_12",
+          "button_label": "Phát Ngay"
+        }
+      },
+      "hash": "eyJleHBpcmVzX2F0IjoiMjAyNi0wNy0xNlQwMDowMDowMCswMDowMCIsInN0YXJ0c19hdCI6IjIwMjYtMDctMDhUMTc6MDA6MDArMDA6MDAiLCJyZXdhcmRfZXhwaXJlcyI6IjIwMjYtMDgtMTVUMDA6MDA6MDArMDA6MDAiLCJ0YXNrX2NvdW50IjoxLCJyZXdhcmRfdHlwZSI6NCwic2t1X2lkIjoiMTI4Nzg4MTczOTUzMTk3NjgxNSJ9",
+      "starts_at": "2026-07-08T17:00:00+00:00",
+      "expires_at": "2026-08-15T00:00:00+00:00",
+      "sent_at": "2026-07-09T13:55:56.089Z",
+      "type": "new"
+    },
+    "1524107612398944376": {
+      "id": "1524107612398944376",
+      "config": {
+        "id": "1524107612398944376",
+        "config_version": 2,
+        "starts_at": "2026-07-08T17:00:00+00:00",
+        "expires_at": "2026-07-15T00:00:00+00:00",
+        "features": [
+          15
+        ],
+        "application": {
+          "link": "https://www.roblox.com/spotlight/adventure?gsrbx=1",
+          "id": "363445589247131668",
+          "name": "Roblox"
+        },
+        "assets": {
+          "hero": "quests/1523830532302045285/1524108180513095760.jpg",
+          "quest_bar_hero_blurhash": "iggGFIQLzIl0eGlVVoRrgJsI6A==",
+          "quest_bar_hero": "quests/1523830532302045285/1524108376093622302.jpg",
+          "quest_bar_hero_video": "quests/1523830532302045285/1524108440711073822_720.mp4",
+          "game_tile": "PLACEHOLDER",
+          "logotype": "PLACEHOLDER",
+          "game_tile_light": "quests/1523830532302045285/1523831490822279360.png",
+          "game_tile_dark": "quests/1523830532302045285/1523831431921532948.png",
+          "logotype_light": "quests/1523830532302045285/1523831557645664336.png",
+          "logotype_dark": "quests/1523830532302045285/1523831557662703758.png"
+        },
+        "colors": {
+          "primary": "#4752C4",
+          "secondary": "#000000"
+        },
+        "messages": {
+          "quest_name": "Paranormal",
+          "game_title": "Paranormal on Roblox",
+          "game_publisher": "ROBLOX"
+        },
+        "task_config_v2": {
+          "tasks": {
+            "PLAY_ON_DESKTOP": {
+              "type": "PLAY_ON_DESKTOP",
+              "target": 900,
+              "applications": [
+                {
+                  "id": "363445589247131668"
+                }
+              ]
+            }
+          },
+          "join_operator": "or"
+        },
+        "rewards_config": {
+          "assignment_method": 1,
+          "rewards": [
+            {
+              "type": 4,
+              "sku_id": "1287881739531976815",
+              "messages": {
+                "name": "700 Orbs",
+                "name_with_article": "700 Orbs",
+                "redemption_instructions_by_platform": {
+                  "0": "PLACEHOLDER"
+                }
+              },
+              "orb_quantity": 700,
+              "premium_orb_quantity": 840
+            }
+          ],
+          "rewards_expire_at": "2026-08-14T00:00:00+00:00",
+          "platforms": [
+            0
+          ]
+        },
+        "share_policy": "shareable_everywhere",
+        "cta_config": {
+          "link": "https://www.roblox.com/spotlight/adventure?gsrbx=1",
+          "button_label": "Phát Ngay"
+        }
+      },
+      "hash": "eyJleHBpcmVzX2F0IjoiMjAyNi0wNy0xNVQwMDowMDowMCswMDowMCIsInN0YXJ0c19hdCI6IjIwMjYtMDctMDhUMTc6MDA6MDArMDA6MDAiLCJyZXdhcmRfZXhwaXJlcyI6IjIwMjYtMDgtMTRUMDA6MDA6MDArMDA6MDAiLCJ0YXNrX2NvdW50IjoxLCJyZXdhcmRfdHlwZSI6NCwic2t1X2lkIjoiMTI4Nzg4MTczOTUzMTk3NjgxNSJ9",
+      "starts_at": "2026-07-08T17:00:00+00:00",
+      "expires_at": "2026-08-14T00:00:00+00:00",
+      "sent_at": "2026-07-09T13:55:57.431Z",
+      "type": "new"
+    }
+  },
+  "last_check": "2026-07-09T13:55:58.533Z"
+}
