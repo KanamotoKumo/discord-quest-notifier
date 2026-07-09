@@ -15,10 +15,10 @@ import {
     sendErrorNotice,
     detectQuestChanges
 } from './module.js';
-import { TOKEN, WEBHOOK, PING_ROLE, REPOSITORY, ERR_WEBHOOK, GITHUB_TOKEN } from './config.js';
+import { DISCORD_TOKEN, MAIN_WEBHOOK, PING_ROLE_ID, REPOSITORY, ERROR_WEBHOOK, GITHUB_TOKEN } from './config.js';
 
 // Validate config
-if (!TOKEN || !WEBHOOK || !GITHUB_TOKEN || !REPOSITORY) {
+if (!DISCORD_TOKEN || !MAIN_WEBHOOK || !GITHUB_TOKEN || !REPOSITORY) {
     console.error('❌ Missing required environment variables: DISCORD_TOKEN, MAIN_WEBHOOK, GITHUB_TOKEN, REPOSITORY');
     process.exit(1);
 }
@@ -119,9 +119,9 @@ async function main() {
             log(`Sending ${newQuests.length} new quest notification(s)...`);
             for (const quest of newQuests) {
                 try {
-                    const content = PING_ROLE ? `<@&${PING_ROLE}>` : '';
+                    const content = PING_ROLE_ID ? `<@&${PING_ROLE_ID}>` : '';
                     const embed = await buildNewQuestEmbed(content, quest, globalAssets);
-                    await sendWebhook(WEBHOOK, embed, true);
+                    await sendWebhook(MAIN_WEBHOOK, embed, true);
 
                     const expiresAt = quest.config?.rewards_config?.rewards_expire_at || quest.config?.expires_at || new Date(now.getTime() + 14 * 24 * 60 * 60 * 1000).toISOString();
                     state.quests[quest.id] = {
@@ -148,9 +148,9 @@ async function main() {
             log(`Sending ${updatedQuests.length} updated quest notification(s)...`);
             for (const { quest, changes, oldQuest } of updatedQuests) {
                 try {
-                    const content = PING_ROLE ? `<@&${PING_ROLE}>` : '';
+                    const content = PING_ROLE_ID ? `<@&${PING_ROLE_ID}>` : '';
                     const embed = await buildUpdatedQuestEmbed(content, oldQuest, quest, globalAssets, changes);
-                    await sendWebhook(WEBHOOK, embed, true);
+                    await sendWebhook(MAIN_WEBHOOK, embed, true);
 
                     // Update state
                     state.quests[quest.id] = {
