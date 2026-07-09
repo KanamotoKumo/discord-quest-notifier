@@ -37,6 +37,7 @@ export async function buildNewQuestEmbed(content, quest, assets) {
     const applicationId = config.application?.id || '';
     const featureName = config.feature || '???';
 
+    // Hero image hiển thị như hình 2
     const heroUrl = config.assets?.hero ? `https://cdn.discordapp.com/${config.assets.hero}` : assets.discordQuests;
 
     // Tasks
@@ -53,7 +54,7 @@ export async function buildNewQuestEmbed(content, quest, assets) {
 
     const embed = {
         title: `### Nhiệm vụ mới - [${questName}](${questLink})`,
-        thumbnail: { url: heroUrl },
+        image: { url: heroUrl }, // fix icon sang ảnh hero
         description: 
 `-# *Nếu như không thấy nhiệm vụ trong app Discord, trước hết phải khởi động lại ứng dụng. Nếu vẫn không thấy thì fake IP sang US, UK, v.v. Chúng tôi sẽ gửi thông báo về yêu cầu về IP vào mỗi buổi trưa (nếu có).*
 
@@ -74,7 +75,7 @@ ${taskList || '* ???'}
 **ID SKU**: \`${skuId}\`
 **Phần thưởng**: ${rewardName}${rewards.extraReward}
 ${rewards.expires}
-**Phần thưởng Nitro**: ${primaryReward?.premium_orb_quantity || '???'}
+${primaryReward?.premium_orb_quantity ? `**Phần thưởng Nitro**: ${primaryReward.premium_orb_quantity}` : ''}
 
 -# **ID Nhiệm vụ**: ${questId}`
     };
@@ -110,8 +111,8 @@ export async function buildUpdatedQuestEmbed(content, oldQuest, newQuest, assets
     const changeDescription = buildChangeDescription(oldQuest, newQuest, changes);
 
     const embed = {
-        title: `### Nhiệm vụ được cập nhật - ${questName}`,
-        thumbnail: { url: heroUrl },
+        title: `### Nhiệm vụ được cập nhật - [${questName}](${questLink})`,
+        image: { url: heroUrl }, // fix icon sang ảnh hero
         description: 
 `-# *Nếu như không thấy nhiệm vụ trong app Discord, trước hết phải khởi động lại ứng dụng. Nếu vẫn không thấy thì fake IP sang US, UK, v.v. Chúng tôi sẽ gửi thông báo về yêu cầu về IP vào mỗi buổi trưa (nếu có).*
 
