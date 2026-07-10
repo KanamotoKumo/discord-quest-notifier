@@ -97,7 +97,7 @@ export async function buildNewQuestEmbed(content, quest, assets) {
   ];
 
   const embedMain = {
-    title: Nhiệm Vụ Mới Đã Đến !!! - ${questName},
+    title: questName,
     image: { url: heroUrl },
     description: descriptionLines.join('\n'),
     footer: { text: `New Quest !!! - Được làm bởi Kanamoto Kumo` }
@@ -170,7 +170,7 @@ export async function buildUpdatedQuestEmbed(content, oldQuest, newQuest, assets
   ];
 
   const embed = {
-    title: Cập Nhật Nhiệm Vụ !!! - ${questName},
+    title: questName,
     image: { url: heroUrl },
     description: descriptionLines.join('\n'),
     footer: { text: `Quest Update !!! - Được làm bởi Kanamoto Kumo` }
