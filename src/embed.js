@@ -4,6 +4,7 @@ import { formatDate, getReward, buildChangeDescription } from './utils.js';
 
 const PING_ROLE_ID = process.env.PING_ROLE_ID || '';
 
+/* Helpers */
 function extractPlatform(config) {
   if (!config) return '???';
   if (Array.isArray(config.platforms) && config.platforms.length) return config.platforms.join(', ');
@@ -31,9 +32,7 @@ function buildTasksList(config) {
   }).join('\n');
 }
 
-/**
- * Resolve reward image from config.assets (game_tile, logotype, etc.)
- */
+/* Resolve reward image from config.assets (game_tile, logotype, etc.) */
 function resolveRewardImage(config, assetsFallback) {
   if (!config) return null;
   const a = config.assets || {};
@@ -50,9 +49,7 @@ function resolveRewardImage(config, assetsFallback) {
   return found ? `https://cdn.discordapp.com/${found}` : null;
 }
 
-/**
- * Resolve video url (hero_video, quest_bar_hero_video, or task.assets.video)
- */
+/* Resolve video url (hero_video, quest_bar_hero_video, or task.assets.video) */
 function resolveVideoUrl(config) {
   if (!config) return null;
   if (config.assets?.hero_video) return `https://cdn.discordapp.com/${config.assets.hero_video}`;
@@ -70,12 +67,11 @@ function resolveVideoUrl(config) {
   return null;
 }
 
-/**
- * Build single embed (new quest)
- * - hero image as embed.image (large)
- * - reward icon as embed.thumbnail (circular)
- * - if video exists: include a field with a watch link (Discord may auto-preview MP4)
- */
+/* Build single embed for NEW quest
+   - hero image as embed.image (large)
+   - reward icon as embed.thumbnail (circular)
+   - if video exists: include a watch link field (Discord may auto-preview MP4)
+*/
 export async function buildNewQuestEmbed(content, quest, assets) {
   const config = quest?.config;
   if (!config) return null;
@@ -99,7 +95,6 @@ export async function buildNewQuestEmbed(content, quest, assets) {
   const skuId = primaryReward?.sku_id || '???';
   const rewards = getReward(primaryReward, rewardName);
 
-  // Resolve images & video
   const heroUrl = config.assets?.hero ? `https://cdn.discordapp.com/${config.assets.hero}` : assets.discordQuests;
   const rewardImageUrl = resolveRewardImage(config, assets);
   const videoUrl = resolveVideoUrl(config);
@@ -111,12 +106,10 @@ export async function buildNewQuestEmbed(content, quest, assets) {
 
   const taskList = buildTasksList(config);
 
-  // Build description: instruction first so hero image visually appears under the title but above description in Discord UI
-  // (Discord places image below description; to keep hero visually prominent we still set image=heroUrl)
   const descriptionLines = [
     `*Nếu như không thấy nhiệm vụ trong app Discord, trước hết phải khởi động lại ứng dụng. Nếu vẫn không thấy thì fake IP sang US, UK, v.v. Chúng tôi sẽ gửi thông báo về yêu cầu về IP vào mỗi buổi trưa (nếu có).*`,
     '',
-    `**Thông tin nhiệm vụ**`,
+    `# **Thông tin nhiệm vụ**`,
     `**Thời hạn**: ${durationStr}`,
     `**Hạn chót nhận thưởng**: ${rewardDeadline}`,
     `**Nền tảng nhận**: ${platforms}`,
@@ -124,34 +117,30 @@ export async function buildNewQuestEmbed(content, quest, assets) {
     `**Application**: ${applicationName} (${applicationId})`,
     `**Tính năng**: ${features}`,
     '',
-    `**Yêu cầu**`,
+    `# **Yêu cầu**`,
     `Người dùng phải hoàn thành một trong các yêu cầu sau:`,
     `${taskList}`,
     '',
-    `**Phần thưởng**`,
+    `# **Phần thưởng**`,
     `**Loại phần thưởng**: ${rewards.rewardType}`,
     `**ID SKU**: \`${skuId}\``,
     `**Phần thưởng**: ${rewardName}${rewards.extraReward || ''}`,
-    `${rewards.expires || ''}`,
-    ''
+    `${rewards.expires || ''}`
   ];
 
-  // If there's a video task, add a clear watch link field (Discord will often show a preview)
   if (videoUrl) {
-    descriptionLines.push(`**Video nhiệm vụ**: [▶️ Xem video nhiệm vụ](${videoUrl})`);
+    // add clear watch link; Discord will often show a playable preview for MP4
+    descriptionLines.push('', `**Video nhiệm vụ**: [▶️ Xem video nhiệm vụ](${videoUrl})`);
   }
 
   descriptionLines.push('', `**ID Nhiệm vụ**: ${questId}`);
 
-  // Single embed only
   const embed = {
-    title: questName, // plain title
+    title: questName,
     description: descriptionLines.join('\n'),
-    // thumbnail is circular — use for reward icon
-    thumbnail: rewardImageUrl ? { url: rewardImageUrl } : undefined,
-    // image is the large rectangle — use hero (so hero appears visually prominent)
-    image: heroUrl ? { url: heroUrl } : undefined,
-    footer: { text: `New Quest Appeared !!! - Được làm bởi Kanamoto Kumo` }
+    thumbnail: rewardImageUrl ? { url: rewardImageUrl } : undefined, // circular icon
+    image: heroUrl ? { url: heroUrl } : undefined, // large hero rectangle
+    footer: { text: `New Quest Appeared !!! - Được làm bởi Korchi Community` }
   };
 
   return {
@@ -162,9 +151,10 @@ export async function buildNewQuestEmbed(content, quest, assets) {
   };
 }
 
-/**
- * Build single embed (updated quest) — same layout: hero large, reward thumbnail circular, video link if exists
- */
+/* Build single embed for UPDATED quest
+   Signature matches main.js: (content, oldQuest, newQuest, assets, changes)
+   Uses buildChangeDescription to list only changed fields.
+*/
 export async function buildUpdatedQuestEmbed(content, oldQuest, newQuest, assets, changes) {
   const config = newQuest?.config;
   if (!config) return null;
@@ -203,7 +193,7 @@ export async function buildUpdatedQuestEmbed(content, oldQuest, newQuest, assets
     description: descriptionLines.join('\n'),
     thumbnail: rewardImageUrl ? { url: rewardImageUrl } : undefined,
     image: heroUrl ? { url: heroUrl } : undefined,
-    footer: { text: `Update Quest !!! - Được làm bởi Kanamoto Kumo` }
+    footer: { text: `Update Quest !!! - Được làm bởi Korchi Community` }
   };
 
   return {
