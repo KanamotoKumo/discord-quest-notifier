@@ -57,8 +57,8 @@
                 }
               ],
               "external_ids": [
-                "1668346801",
-                "1854680102"
+                "1854680102",
+                "1668346801"
               ]
             },
             "PLAY_ON_PLAYSTATION": {
@@ -70,10 +70,10 @@
                 }
               ],
               "external_ids": [
-                "PPSA28884_00",
-                "PPSA28882_00",
                 "PPSA28881_00",
-                "PPSA28883_00"
+                "PPSA28882_00",
+                "PPSA28883_00",
+                "PPSA28884_00"
               ]
             }
           },
@@ -109,9 +109,10 @@
       },
       "hash": "eyJleHBpcmVzX2F0IjoiMjAyNi0wNy0xNFQwMDowMDowMCswMDowMCIsInN0YXJ0c19hdCI6IjIwMjYtMDYtMzBUMTc6MDA6MDArMDA6MDAiLCJyZXdhcmRfZXhwaXJlcyI6IjIwMjYtMDgtMTNUMDA6MDA6MDArMDA6MDAiLCJ0YXNrX2NvdW50IjozLCJyZXdhcmRfdHlwZSI6NCwic2t1X2lkIjoiMTI4Nzg4MTczOTUzMTk3NjgxNSJ9",
       "starts_at": "2026-06-30T17:00:00+00:00",
-      "expires_at": "2026-08-13T00:00:00+00:00",
+      "expires_at": "2026-07-14T00:00:00+00:00",
       "sent_at": "2026-07-10T11:47:52.196Z",
-      "type": "new"
+      "type": "updated",
+      "updated_at": "2026-07-11T04:50:19.404Z"
     },
     "1521041366774190240": {
       "id": "1521041366774190240",
@@ -490,5 +491,5 @@
       "type": "new"
     }
   },
-  "last_check": "2026-07-11T02:43:48.428Z"
+  "last_check": "2026-07-11T04:50:20.505Z"
 }
