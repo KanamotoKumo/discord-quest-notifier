@@ -329,7 +329,7 @@
           15
         ],
         "application": {
-          "link": "https://nte.onelink.me/RX86/Event_West_12",
+          "link": "https://nte.onelink.me/B2ti/DA_ahq_1",
           "id": "1470616226995765409",
           "name": "Neverness to Everness"
         },
@@ -393,15 +393,16 @@
         },
         "share_policy": "shareable_everywhere",
         "cta_config": {
-          "link": "https://nte.onelink.me/RX86/Event_West_12",
+          "link": "https://nte.onelink.me/B2ti/DA_ahq_1",
           "button_label": "Phát Ngay"
         }
       },
       "hash": "eyJleHBpcmVzX2F0IjoiMjAyNi0wNy0xNlQwMDowMDowMCswMDowMCIsInN0YXJ0c19hdCI6IjIwMjYtMDctMDhUMTc6MDA6MDArMDA6MDAiLCJyZXdhcmRfZXhwaXJlcyI6IjIwMjYtMDgtMTVUMDA6MDA6MDArMDA6MDAiLCJ0YXNrX2NvdW50IjoxLCJyZXdhcmRfdHlwZSI6NCwic2t1X2lkIjoiMTI4Nzg4MTczOTUzMTk3NjgxNSJ9",
       "starts_at": "2026-07-08T17:00:00+00:00",
-      "expires_at": "2026-08-15T00:00:00+00:00",
+      "expires_at": "2026-07-16T00:00:00+00:00",
       "sent_at": "2026-07-10T11:47:56.715Z",
-      "type": "new"
+      "type": "updated",
+      "updated_at": "2026-07-11T02:43:47.327Z"
     },
     "1524107612398944376": {
       "id": "1524107612398944376",
@@ -489,5 +490,5 @@
       "type": "new"
     }
   },
-  "last_check": "2026-07-10T22:04:35.008Z"
+  "last_check": "2026-07-11T02:43:48.428Z"
 }
