@@ -164,7 +164,7 @@ export async function buildNewQuestEmbed(content, quest, assets) {
   const description = [
     `*${i18n.note_restart_app || 'Nếu không thấy nhiệm vụ trong app, thử khởi động lại ứng dụng.'}*`,
     '',
-    `**${i18n.quest_info || '# Thông tin nhiệm vụ'}**`,
+    `**${i18n.quest_info || 'Thông tin nhiệm vụ'}**`,
     `**${i18n.duration || 'Thời hạn'}**: ${durationStr}`,
     `**${i18n.reward_deadline || 'Hạn chót nhận thưởng'}**: ${rewardDeadline}`,
     `**${i18n.platforms || 'Nền tảng'}**: ${platforms}`,
@@ -172,10 +172,10 @@ export async function buildNewQuestEmbed(content, quest, assets) {
     `**${i18n.application || 'Application'}**: ${applicationName} (${applicationId})`,
     `**${i18n.features || 'Tính năng'}**: ${features}`,
     '',
-    `**${i18n.requirements || '# Yêu cầu'}**`,
+    `**${i18n.requirements || 'Yêu cầu'}**`,
     tasksText,
     '',
-    `**${i18n.rewards || '# Phần thưởng'}**`,
+    `**${i18n.rewards || 'Phần thưởng'}**`,
     `**${i18n.reward_type || 'Loại'}**: ${rewards.rewardType}`,
     `**${i18n.sku || 'SKU'}**: \`${skuId}\``,
     `**${i18n.reward_name || 'Phần thưởng'}**: ${rewardName}${rewards.extraReward || ''}`,
@@ -188,13 +188,13 @@ export async function buildNewQuestEmbed(content, quest, assets) {
     title: questName,
     description,
     color: 0x2f3136,
-    footer: { text: `New Quest Appeared !!! - Được làm bởi Korchi Community` }
+    footer: { text: `${i18n.quest_id || 'ID'}: ${questId}` }
   };
 
   if (heroRef) embed.image = { url: heroRef };
   if (rewardRef) embed.thumbnail = { url: rewardRef };
   // embed.video may be ignored by Discord for webhooks, but include if available
-  if (videoUrl) embed.video = { url:videoUrl };
+  if (videoRef) embed.video = { url: videoRef };
 
   // Components v2 (action row with buttons)
   const components = [];
@@ -223,7 +223,7 @@ export async function buildNewQuestEmbed(content, quest, assets) {
       type: 2,
       style: 5,
       label: i18n.view_reward_button || 'Ảnh phần thưởng',
-      url: currentRewardIcon.href
+      url: rewardButtonUrl
     });
   }
 
