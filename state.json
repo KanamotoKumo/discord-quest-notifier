@@ -57,8 +57,8 @@
                 }
               ],
               "external_ids": [
-                "1668346801",
-                "1854680102"
+                "1854680102",
+                "1668346801"
               ]
             },
             "PLAY_ON_PLAYSTATION": {
@@ -70,9 +70,9 @@
                 }
               ],
               "external_ids": [
-                "PPSA28881_00",
                 "PPSA28883_00",
                 "PPSA28882_00",
+                "PPSA28881_00",
                 "PPSA28884_00"
               ]
             }
@@ -112,7 +112,7 @@
       "expires_at": "2026-07-14T00:00:00+00:00",
       "sent_at": "2026-07-13T11:45:58.314Z",
       "type": "updated",
-      "updated_at": "2026-07-13T17:13:26.501Z"
+      "updated_at": "2026-07-13T19:24:21.738Z"
     },
     "1521260970586931220": {
       "id": "1521260970586931220",
@@ -488,7 +488,115 @@
       "expires_at": "2026-08-22T06:59:00+00:00",
       "sent_at": "2026-07-13T11:46:04.017Z",
       "type": "new"
+    },
+    "1521257596403712182": {
+      "id": "1521257596403712182",
+      "config": {
+        "id": "1521257596403712182",
+        "config_version": 2,
+        "starts_at": "2026-07-03T17:00:00+00:00",
+        "expires_at": "2026-07-20T06:59:00+00:00",
+        "features": [
+          15
+        ],
+        "application": {
+          "link": "https://game.ea.com/redirect?campaignName=FC26_UA_US_EA_SOC_DIS_WC&caudience=C3-FC-Competitor&ccreative=S-QUEST-MXUS&caudienceid=1521257596403712184",
+          "id": "1421154726023532544",
+          "name": "EA SPORTS FC 26"
+        },
+        "assets": {
+          "hero": "quests/1521257596403712182/1521260435720900670.jpg",
+          "quest_bar_hero_blurhash": "kOgFLISFaYhgl4ZSmGqHcHf3dw==",
+          "quest_bar_hero": "quests/1521257596403712182/1521260402606997615.jpg",
+          "game_tile": "1521260571234930719.png",
+          "logotype": "1521260570152669344.png",
+          "game_tile_light": "quests/1521257596403712182/1521260058850365520.png",
+          "game_tile_dark": "quests/1521257596403712182/1521260058791510117.png",
+          "logotype_light": "quests/1521257596403712182/1521260058791645224.png",
+          "logotype_dark": "quests/1521257596403712182/1521260058841714698.png"
+        },
+        "colors": {
+          "primary": "#4752C4",
+          "secondary": "#000000"
+        },
+        "messages": {
+          "quest_name": "EAFC x The World's Game",
+          "game_title": "EA SPORTS FC 26",
+          "game_publisher": "Electronic Arts"
+        },
+        "task_config_v2": {
+          "tasks": {
+            "PLAY_ON_DESKTOP": {
+              "type": "PLAY_ON_DESKTOP",
+              "target": 900,
+              "applications": [
+                {
+                  "id": "1421154726023532544"
+                }
+              ]
+            },
+            "PLAY_ON_XBOX": {
+              "type": "PLAY_ON_XBOX",
+              "target": 900,
+              "applications": [
+                {
+                  "id": "1421154726023532544"
+                }
+              ],
+              "external_ids": [
+                "1909324253"
+              ]
+            },
+            "PLAY_ON_PLAYSTATION": {
+              "type": "PLAY_ON_PLAYSTATION",
+              "target": 900,
+              "applications": [
+                {
+                  "id": "1421154726023532544"
+                }
+              ],
+              "external_ids": [
+                "CUSA52342_00",
+                "PPSA27360_00"
+              ]
+            }
+          },
+          "join_operator": "or"
+        },
+        "rewards_config": {
+          "assignment_method": 1,
+          "rewards": [
+            {
+              "type": 4,
+              "sku_id": "1287881739531976815",
+              "messages": {
+                "name": "700 Orbs",
+                "name_with_article": "700 Orbs",
+                "redemption_instructions_by_platform": {
+                  "0": "PLACEHOLDER"
+                }
+              },
+              "orb_quantity": 700,
+              "premium_orb_quantity": 840
+            }
+          ],
+          "rewards_expire_at": "2026-08-19T06:59:00+00:00",
+          "platforms": [
+            0
+          ]
+        },
+        "share_policy": "shareable_everywhere",
+        "cta_config": {
+          "link": "https://game.ea.com/redirect?campaignName=FC26_UA_US_EA_SOC_DIS_WC&caudience=C3-FC-Competitor&ccreative=S-QUEST-MXUS&caudienceid=1521257596403712184",
+          "button_label": "Phát Ngay"
+        }
+      },
+      "hash": "eyJxdWVzdF9uYW1lIjoiRUFGQyB4IFRoZSBXb3JsZCdzIEdhbWUiLCJnYW1lX3RpdGxlIjoiRUEgU1BPUlRTIEZDIDI2IiwiZ2FtZV9wdWJsaXNoZXIiOiJFbGVjdHJvbmljIEFydHMiLCJhcHBsaWNhdGlvbl9pZCI6IjE0MjExNTQ3MjYwMjM1MzI1NDQiLCJhcHBsaWNhdGlvbl9uYW1lIjoiRUEgU1BPUlRTIEZDIDI2Iiwic3RhcnRzX2F0IjoiMjAyNi0wNy0wM1QxNzowMDowMCswMDowMCIsImV4cGlyZXNfYXQiOiIyMDI2LTA3LTIwVDA2OjU5OjAwKzAwOjAwIiwicmV3YXJkX2V4cGlyZXNfYXQiOiIyMDI2LTA4LTE5VDA2OjU5OjAwKzAwOjAwIiwiY29sb3JfcHJpbWFyeSI6IiM0NzUyQzQiLCJjb2xvcl9zZWNvbmRhcnkiOiIjMDAwMDAwIiwiZmVhdHVyZXMiOlsxNV0sInJld2FyZF9wbGF0Zm9ybXMiOlswXSwidGFza3MiOlt7ImtleSI6IlBMQVlfT05fREVTS1RPUCIsInR5cGUiOiJQTEFZX09OX0RFU0tUT1AiLCJ0YXJnZXQiOjkwMH0seyJrZXkiOiJQTEFZX09OX1BMQVlTVEFUSU9OIiwidHlwZSI6IlBMQVlfT05fUExBWVNUQVRJT04iLCJ0YXJnZXQiOjkwMH0seyJrZXkiOiJQTEFZX09OX1hCT1giLCJ0eXBlIjoiUExBWV9PTl9YQk9YIiwidGFyZ2V0Ijo5MDB9XSwicmV3YXJkcyI6W3sic2t1X2lkIjoiMTI4Nzg4MTczOTUzMTk3NjgxNSIsInR5cGUiOjQsIm5hbWUiOiI3MDAgT3JicyIsIm9yYl9xdWFudGl0eSI6NzAwLCJleHBpcmVzX2F0IjpudWxsfV0sImFzc2V0cyI6eyJoZXJvIjoicXVlc3RzLzE1MjEyNTc1OTY0MDM3MTIxODIvMTUyMTI2MDQzNTcyMDkwMDY3MC5qcGciLCJxdWVzdF9iYXJfaGVybyI6InF1ZXN0cy8xNTIxMjU3NTk2NDAzNzEyMTgyLzE1MjEyNjA0MDI2MDY5OTc2MTUuanBnIiwiZ2FtZV90aWxlIjoiMTUyMTI2MDU3MTIzNDkzMDcxOS5wbmciLCJnYW1lX3RpbGVfbGlnaHQiOiJxdWVzdHMvMTUyMTI1NzU5NjQwMzcxMjE4Mi8xNTIxMjYwMDU4ODUwMzY1NTIwLnBuZyIsImdhbWVfdGlsZV9kYXJrIjoicXVlc3RzLzE1MjEyNTc1OTY0MDM3MTIxODIvMTUyMTI2MDA1ODc5MTUxMDExNy5wbmciLCJsb2dvdHlwZSI6IjE1MjEyNjA1NzAxNTI2NjkzNDQucG5nIiwibG9nb3R5cGVfbGlnaHQiOiJxdWVzdHMvMTUyMTI1NzU5NjQwMzcxMjE4Mi8xNTIxMjYwMDU4NzkxNjQ1MjI0LnBuZyIsImxvZ290eXBlX2RhcmsiOiJxdWVzdHMvMTUyMTI1NzU5NjQwMzcxMjE4Mi8xNTIxMjYwMDU4ODQxNzE0Njk4LnBuZyJ9fQ==",
+      "starts_at": "2026-07-03T17:00:00+00:00",
+      "expires_at": "2026-08-19T06:59:00+00:00",
+      "sent_at": "2026-07-13T19:24:20.249Z",
+      "type": "new"
     }
   },
-  "last_check": "2026-07-13T17:13:27.602Z"
+  "last_check": "2026-07-13T19:24:22.841Z"
 }
