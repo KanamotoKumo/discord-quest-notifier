@@ -1,0 +1,42 @@
+{
+  "name": "Korchi Notifier",
+  "new_quest": "Nhiệm vụ mới",
+  "updated_quest": "Nhiệm vụ được cập nhật",
+  "note_restart_app": "Nếu như không thấy nhiệm vụ trong app Discord, trước hết phải khởi động lại ứng dụng. Nếu vẫn không thấy thì fake IP sang US, UK, v.v. Chúng tôi sẽ gửi thông báo về yêu cầu về IP vào mỗi buổi trưa (nếu có).",
+  "quest_info": "Thông tin nhiệm vụ",
+  "duration": "Thời hạn",
+  "reward_expires": "Hạn chót nhận thưởng",
+  "platforms": "Nền tảng nhận",
+  "game": "Game",
+  "application": "Application",
+  "features": "Tính năng",
+  "tasks": "Yêu cầu",
+  "task_condition": {
+    "and": "Người dùng phải hoàn thành TẤT CẢ các yêu cầu sau:",
+    "or": "Người dùng phải hoàn thành một trong các yêu cầu sau:"
+  },
+  "rewards_title": "Phần thưởng",
+  "reward_type": "Loại phần thưởng",
+  "sku_id": "ID SKU",
+  "reward_name": {
+    "normal": "Phần thưởng",
+    "extra": "Phần thưởng Nitro"
+  },
+  "decor_expires": "Hết hạn",
+  "quest_id": "ID Nhiệm vụ",
+  "changes_title": "Thay đổi",
+  "no_changes": "Không phát hiện thay đổi nào.",
+  "error": {
+    "new_quest": "Quest Không Xác Định",
+    "game_name": "Game Không Xác Định",
+    "game_publisher": "Nhà Phát Hành Không Xác Định",
+    "reward": "Phần Thưởng Không Xác Định",
+    "reward_type": "Loại Không Xác Định"
+  },
+  "rewards": {
+    "1": "Nitro",
+    "2": "Nitro Classic",
+    "3": "Trang Trí",
+    "4": "Orbs"
+  }
+}
