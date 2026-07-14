@@ -157,6 +157,7 @@ discord-quests-notifier/
 │   └── questsTracker.yml    ← GitHub Actions workflow
 ├── .env.example             ← Environment template
 ├── package.json
+├── package-lock.json
 ├── state.json               ← Quest state (auto-managed)
 ├── proxy.json
 └── README.md
