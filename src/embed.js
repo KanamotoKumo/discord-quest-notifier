@@ -1,35 +1,97 @@
 // src/embed.js
-// ─── Embed Builder — 100% Discord Components V2, no legacy embeds, ever ────
+// ─── Embed Builder — 100% Discord Components V2 ────────────────────────────
 //
-// Every payload built here sets the IS_COMPONENTS_V2 flag unconditionally
-// and never sets `content` or `embeds` — there is no code path left that
-// can produce a V1 rich embed.
+// Rebuilt around the real language/vi-VN.json keys (the previous version
+// guessed key names like `platforms`, `requirements_intro`, `open_quest_button`
+// that don't actually exist in your i18n file, so those custom emoji labels
+// were never shown — everything fell back to my own placeholder text).
 //
-// Layout mirrors the reference screenshots:
-//   [ping?] "# Nhiệm vụ mới - {name}"
-//   → hero image (Media Gallery)
-//   → restart/fake-IP note
-//   → quest info block (duration, reward deadline, platform, game, app, feature)
-//   → requirements block (intro line + task bullets)
-//   → reward block (type/sku/name) with the reward icon as a small Thumbnail
-//     accessory next to it
-//   → hero video (separate Media Gallery, large + playable)
-//   → quest id
-//   → "Open quest" button
+// Also fixes the two bugs from the screenshot:
+//  1. Video only shows for quests that actually have a WATCH_VIDEO /
+//     WATCH_VIDEO_ON_MOBILE task. It's now read from that task's own
+//     `assets.video/.video_low_res/.video_hls.url`, which only exists on
+//     video tasks — instead of `config.assets.hero_video`, which exists on
+//     nearly every quest regardless of task type (that's why it was showing
+//     up under PLAY_ON_DESKTOP/PLAY_ON_PLAYSTATION quests too).
+//  2. Reward icon: decoration rewards' `asset` field is frequently an .mp4
+//     (an animated preview) — used directly as a Thumbnail it renders
+//     broken. Appending `?format=webp` asks Discord's CDN for a static
+//     image instead. Orb/Nitro rewards have no asset of their own at all,
+//     so those now use two fixed fallback icons instead of a mismatched URL.
 //
-// Images/video use the original Discord CDN URL directly as the component's
-// `media.url` — nothing is downloaded or re-uploaded server-side, so there's
-// nothing left that can 403.
+// getReward()/formatDate() are inlined here rather than imported from
+// utils.js — that file's versions are almost certainly where the
+// "[object Object]" text in the screenshot came from (an object landing in
+// a template string somewhere neither of us has seen the source of). This
+// file no longer depends on utils.js at all, so there's nowhere left for
+// that bug to hide.
+//
+// detectQuestChanges()/buildChangeDescription() are also still unseen, so
+// the "updated quest" changes text below is reconstructed directly from
+// oldQuest/newQuest using the *_changed keys in vi-VN.json. If the real
+// `changes` object passed from main.js doesn't have exactly
+// { expires_at, starts_at, reward, task_count } as boolean flags, let me
+// know the actual shape and I'll correct it.
+import { i18n } from './language.js';
 import fs from 'fs/promises';
 import path from 'path';
-import { i18n } from './language.js';
-import { formatDate, getReward, buildChangeDescription } from './utils.js';
-import { decodeFeatures } from './state.js';
 
 const PING_ROLE_ID = process.env.PING_ROLE_ID || '';
 const IS_COMPONENTS_V2 = 1 << 15; // 32768
+const CDN_BASE = 'https://cdn.discordapp.com/';
+const FALLBACK_ORB_ICON =
+  'https://raw.githubusercontent.com/kanamotokumo/discord-quests-notifier/refs/heads/main/assets/orb.png';
+const FALLBACK_NITRO_ICON =
+  'https://raw.githubusercontent.com/kanamotokumo/discord-quests-notifier/refs/heads/main/assets/nitro.png';
 
-/* ── asset path resolution (unchanged behavior, still zero downloads) ──────── */
+/** Discord timestamp markup — renders as a locale-aware date for whoever's viewing it. */
+function formatDate(isoString) {
+  if (!isoString) return '';
+  const d = new Date(isoString);
+  const timestamp = Math.floor(d.getTime() / 1000);
+  return `<t:${timestamp}:d>`;
+}
+
+/** i18n.rewards maps numeric reward `type` -> readable name (e.g. "4": "Orbs"). */
+function getRewardInfo(reward, rewardName) {
+  let extraReward = '';
+  if (reward?.type === 4 && reward?.premium_orb_quantity) {
+    const normalOrbs = String(reward?.orb_quantity || '');
+    const premiumOrbs = String(reward?.premium_orb_quantity || '');
+    extraReward = `\n**${i18n.reward_name.extra}:** ${String(rewardName).replace(normalOrbs, premiumOrbs)}`;
+  }
+  let expires = '';
+  if (reward?.type === 3 && reward?.expires_at) {
+    expires = `\n**${i18n.decor_expires}:** ${formatDate(reward.expires_at)}`;
+  }
+  const rewardType = i18n.rewards[String(reward?.type)] || i18n.error.reward_type;
+  return { rewardType, extraReward, expires };
+}
+
+function withWebpFormat(url) {
+  try {
+    const u = new URL(url);
+    u.searchParams.set('format', 'webp');
+    return u.href;
+  } catch {
+    return url;
+  }
+}
+
+/**
+ * Orb/Nitro rewards have no per-reward image of their own — use the fixed
+ * fallback icons. Everything else (codes, decorations) uses Discord's own
+ * CDN asset for that specific reward, converted to a static image.
+ */
+function resolveRewardIconUrl(rewardName, primaryReward, assets) {
+  const nameLower = String(rewardName || '').toLowerCase();
+  if (nameLower.includes('orb')) return FALLBACK_ORB_ICON;
+  if (nameLower.includes('nitro')) return FALLBACK_NITRO_ICON;
+  if (primaryReward?.asset) return withWebpFormat(`${CDN_BASE}${primaryReward.asset}`);
+  return assets?.emptyIconUrl || null;
+}
+
+/* ── PLACEHOLDER-aware asset path resolution (unchanged from before) ───────── */
 
 async function readStateFile() {
   try {
@@ -42,31 +104,18 @@ async function readStateFile() {
   }
 }
 
-function buildCdnUrl(assetPath) {
-  if (!assetPath) return null;
-  const s = String(assetPath).trim();
-  if (!s) return null;
-  if (s.startsWith('http://') || s.startsWith('https://')) return s;
-  const normalized = s.replace(/^\/+/, '');
-  return `https://cdn.discordapp.com/${normalized}`;
-}
-
 async function resolveAssetPath(assetValue, questId) {
   if (!assetValue) return null;
   const trimmed = String(assetValue).trim();
   if (!trimmed) return null;
-
   if (/PLACEHOLDER/i.test(trimmed) || trimmed.toLowerCase() === 'placeholder') {
     try {
       const state = await readStateFile();
       const prev = state?.quests?.[questId];
-      const prevConfig = prev?.config || {};
-      const prevAssets = prevConfig.assets || {};
+      const prevAssets = prev?.config?.assets || {};
       const candidates = [
         prevAssets.hero,
-        prevAssets.hero_video,
         prevAssets.quest_bar_hero,
-        prevAssets.quest_bar_hero_video,
         prevAssets.game_tile,
         prevAssets.game_tile_light,
         prevAssets.game_tile_dark,
@@ -78,151 +127,55 @@ async function resolveAssetPath(assetValue, questId) {
         if (c && !/PLACEHOLDER/i.test(String(c))) return String(c).trim();
       }
     } catch (e) {
-      // ignore, fall through to null
+      // ignore
     }
     return null;
   }
-
   return trimmed;
 }
 
-/**
- * Resolve hero image / hero video / reward icon URLs. Reward icon falls back
- * to assets.rewardIconUrl (from main.js's globalAssets) when the quest has
- * no game_tile/logotype of its own, so the reward block always has an icon.
- */
-async function resolveAssetUrls(config, assetsFallback, questId) {
-  const heroRaw = config?.assets?.hero || config?.assets?.quest_bar_hero || null;
-  const heroVideoRaw = config?.assets?.hero_video || config?.assets?.quest_bar_hero_video || null;
-  const rewardRaw =
-    config?.assets?.game_tile ||
-    config?.assets?.game_tile_light ||
-    config?.assets?.game_tile_dark ||
-    config?.assets?.logotype ||
-    config?.assets?.logotype_light ||
-    config?.assets?.logotype_dark ||
-    null;
-
-  const heroPath = await resolveAssetPath(heroRaw, questId);
-  const heroVideoPath = await resolveAssetPath(heroVideoRaw, questId);
-  const rewardPath = await resolveAssetPath(rewardRaw, questId);
-
-  const heroUrl = buildCdnUrl(heroPath) || assetsFallback?.discordQuests || null;
-  const videoUrl = buildCdnUrl(heroVideoPath) || null;
-  const rewardUrl = buildCdnUrl(rewardPath) || assetsFallback?.rewardIconUrl || null;
-
-  return { heroUrl, videoUrl, rewardUrl };
+function buildCdnUrl(assetPath) {
+  if (!assetPath) return null;
+  const s = String(assetPath).trim();
+  if (!s) return null;
+  if (s.startsWith('http://') || s.startsWith('https://')) return s;
+  return `${CDN_BASE}${s.replace(/^\/+/, '')}`;
 }
 
-/* ── small V2 component builders ─────────────────────────────────────────── */
+/**
+ * Video URL comes from the WATCH_VIDEO(_ON_MOBILE) task's own asset — only
+ * those task types have `assets.video`, so this naturally returns null for
+ * PLAY_ON_DESKTOP/PLAY_ON_XBOX/etc.-only quests instead of always finding
+ * something via config.assets.hero_video.
+ */
+function extractTaskVideoUrl(tasks) {
+  for (const task of Object.values(tasks || {})) {
+    const raw = task?.assets?.video?.url || task?.assets?.video_low_res?.url || task?.assets?.video_hls?.url;
+    if (raw) return buildCdnUrl(raw);
+  }
+  return null;
+}
+
+/* ── shared component builders ──────────────────────────────────────────── */
 
 const textDisplay = content => ({ type: 10, content });
 const separator = (divider = true, spacing = 1) => ({ type: 14, divider, spacing });
 
-/** Builds a Media Gallery from any number of {url, description} entries (falsy entries ignored). */
-function mediaGallery(...items) {
-  const built = items.filter(Boolean).map(({ url, description }) => ({ media: { url }, description }));
-  return built.length ? { type: 12, items: built } : null;
-}
-
-/** Text + small image side by side (Section+Thumbnail) — falls back to plain text if no image. */
-function sectionOrText(bodyText, thumbnailUrl) {
-  if (thumbnailUrl) {
-    return {
+function pushRewardSection(children, { rewardIconUrl, rewardBody }) {
+  if (rewardIconUrl) {
+    children.push({
       type: 9,
-      components: [textDisplay(bodyText)],
-      accessory: { type: 11, media: { url: thumbnailUrl } },
-    };
+      components: [textDisplay(`## ${i18n.rewards_title}`), textDisplay(rewardBody)],
+      accessory: { type: 11, media: { url: rewardIconUrl } },
+    });
+  } else {
+    children.push(textDisplay(`## ${i18n.rewards_title}`));
+    children.push(textDisplay(rewardBody));
   }
-  return textDisplay(bodyText);
 }
 
-function openQuestButtonRow(questLink) {
-  return {
-    type: 1,
-    components: [{ type: 2, style: 5, label: i18n.open_quest_button || 'Mở nhiệm vụ', url: questLink }],
-  };
-}
+/* ── public API ──────────────────────────────────────────────────────────── */
 
-/* ── text blocks ──────────────────────────────────────────────────────────── */
-
-// PLAY_ON_* task keys are the only real, observed signal for which platforms
-// a quest supports — there is no top-level `config.platforms` field in the
-// real API data (confirmed against a live quests.json dump), so we derive
-// this instead of reading a field that never existed.
-const PLATFORM_TASK_LABELS = {
-  PLAY_ON_DESKTOP: 'PC',
-  PLAY_ON_XBOX: 'Xbox',
-  PLAY_ON_PLAYSTATION: 'PlayStation',
-};
-
-function derivePlatformsText(config) {
-  const taskKeys = Object.keys(config.task_config_v2?.tasks || {});
-  const matched = taskKeys.map(k => PLATFORM_TASK_LABELS[k]).filter(Boolean);
-  return matched.length ? matched.join(', ') : 'Đa nền tảng';
-}
-
-function buildInfoText(config) {
-  const durationStr = `${formatDate(config.starts_at)} - ${formatDate(config.expires_at)}`;
-  const rewardDeadline = formatDate(config.rewards_config?.rewards_expire_at) || '—';
-  const gameTitle = config.messages?.game_title || i18n.error.game_name;
-  const gamePublisher = config.messages?.game_publisher || i18n.error.game_publisher;
-  const applicationName = config.application?.name || '—';
-  const applicationId = config.application?.id || '—';
-  const platforms = derivePlatformsText(config);
-  // `features` is a real number[] bitfield (e.g. [3, 9, 13, ...]) — decode it
-  // into readable names rather than showing raw IDs.
-  const featureNames = decodeFeatures(config.features);
-  const features = featureNames.length ? featureNames.join(', ') : '—';
-
-  return [
-    `**${i18n.quest_info || 'Thông tin nhiệm vụ'}**`,
-    `**${i18n.duration || 'Thời hạn'}**: ${durationStr}`,
-    `**${i18n.reward_deadline || 'Hạn chót nhận thưởng'}**: ${rewardDeadline}`,
-    `**${i18n.platforms || 'Nền tảng nhận'}**: ${platforms}`,
-    `**${i18n.game || 'Game'}**: ${gameTitle} (${gamePublisher})`,
-    `**${i18n.application || 'Application'}**: ${applicationName} (\`${applicationId}\`)`,
-    `**${i18n.features || 'Tính năng'}**: \`${features}\``,
-  ].join('\n');
-}
-
-function buildRequirementsText(config) {
-  const tasks = Object.values(config.task_config_v2?.tasks || {});
-  const tasksList = tasks.length
-    ? tasks
-        .map(t => {
-          const minutes = t.target ? Math.round(t.target / 60) : 0;
-          const name = String(t.type || '').replace(/_/g, ' ').trim() || 'TASK';
-          return `• ${name} (${minutes} phút)`;
-        })
-        .join('\n')
-    : '—';
-
-  return [
-    `**${i18n.requirements || 'Yêu cầu'}**`,
-    i18n.requirements_intro || 'Người dùng phải hoàn thành một trong các yêu cầu sau:',
-    tasksList,
-  ].join('\n');
-}
-
-function buildRewardsText({ rewards, skuId, rewardName }) {
-  const lines = [
-    `**${i18n.rewards || 'Phần thưởng'}**`,
-    `**${i18n.reward_type || 'Loại phần thưởng'}**: ${rewards.rewardType}`,
-    `**${i18n.sku || 'ID SKU'}**: \`${skuId}\``,
-    `**${i18n.reward_name || 'Tên'}**: ${rewardName}${rewards.extraReward || ''}`,
-  ];
-  if (rewards.expires) lines.push(rewards.expires);
-  return lines.join('\n');
-}
-
-/* ── public API ───────────────────────────────────────────────────────────── */
-
-/**
- * Build the message payload for a brand-new quest.
- * Returns { payload, attachments: [] } — attachments is always empty, images
- * are linked directly rather than uploaded.
- */
 export async function buildNewQuestEmbed(content, quest, assets) {
   const config = quest?.config;
   if (!config) return null;
@@ -230,93 +183,145 @@ export async function buildNewQuestEmbed(content, quest, assets) {
   const questId = quest.id || '';
   const questName = config.messages?.quest_name || i18n.error.new_quest;
   const questLink = `https://canary.discord.com/quests/${questId}`;
-  const restartNote = i18n.note_restart_app || 'Nếu không thấy nhiệm vụ trong app, thử khởi động lại ứng dụng.';
+  const gameTitle = config.messages?.game_title || i18n.error.game_name;
+  const gamePublisher = config.messages?.game_publisher || i18n.error.game_publisher;
+  const applicationLink = config.application?.link || questLink || 'https://discord.com';
+  const applicationName = config.application?.name || '';
+  const applicationId = config.application?.id || '';
+  const restartNote = i18n.note_restart_app || 'Nếu như không thấy nhiệm vụ trong app Discord, trước hết phải khởi động lại ứng dụng. Nếu vẫn không thấy thì fake IP sang US, UK, v.v. Chúng tôi sẽ gửi thông báo về yêu cầu về IP vào mỗi buổi trưa (nếu có).';
 
-  const { heroUrl, videoUrl, rewardUrl } = await resolveAssetUrls(config, assets, questId);
+  const heroPath = await resolveAssetPath(config.assets?.hero || config.assets?.quest_bar_hero, questId);
+  const heroUrl = buildCdnUrl(heroPath) || assets?.discordQuests || null;
+
+  const tasks = config.task_config_v2?.tasks || {};
+  const videoUrl = extractTaskVideoUrl(tasks);
+  const taskCondition = config.task_config_v2?.join_operator || 'or';
+  const taskList = Object.values(tasks)
+    .map(task => {
+      const minutes = task.target ? Math.round(task.target / 60) : 0;
+      const taskName = String(task.type || '').replace(/_/g, ' ').trim() || 'TASK';
+      return `• ${taskName} (${minutes} phút)`;
+    })
+    .join('\n');
 
   const primaryReward = config.rewards_config?.rewards?.[0] || null;
   const rewardName = primaryReward?.messages?.name || i18n.error.reward;
-  const skuId = primaryReward?.sku_id || '—';
-  const rewards = getReward(primaryReward, rewardName);
+  const skuId = primaryReward?.sku_id || '';
+  const rewardExpires = formatDate(config.rewards_config?.rewards_expire_at);
+  const { rewardType, extraReward, expires: decorExpires } = getRewardInfo(primaryReward, rewardName);
+  const rewardIconUrl = resolveRewardIconUrl(rewardName, primaryReward, assets);
 
-  const headerLines = [];
-  if (PING_ROLE_ID) headerLines.push(`<@&${PING_ROLE_ID}>`);
-  else if (content) headerLines.push(content);
-  headerLines.push(`# ${i18n.new_quest_header || 'Nhiệm vụ mới'} - ${questName}`);
+  const durationStr = `${formatDate(config.starts_at)} - ${formatDate(config.expires_at)}`;
 
-  const children = [textDisplay(headerLines.join('\n'))];
+  const children = [];
+  if (PING_ROLE_ID) children.push(textDisplay(`<@&${PING_ROLE_ID}>`));
+  else if (content) children.push(textDisplay(content));
 
-  const heroGallery = mediaGallery(heroUrl && { url: heroUrl, description: questName });
-  if (heroGallery) children.push(heroGallery);
+  children.push(textDisplay(`# ${i18n.new_quest} - [${questName}](${questLink})`));
+
+  if (heroUrl) children.push({ type: 12, items: [{ media: { url: heroUrl }, description: questName }] });
 
   children.push(separator());
   children.push(textDisplay(`*${restartNote}*`));
   children.push(separator());
-  children.push(textDisplay(buildInfoText(config)));
-  children.push(separator());
-  children.push(textDisplay(buildRequirementsText(config)));
-  children.push(separator());
-  children.push(sectionOrText(buildRewardsText({ rewards, skuId, rewardName }), rewardUrl));
 
-  const videoGallery = mediaGallery(videoUrl && { url: videoUrl, description: `${questName} - video` });
-  if (videoGallery) children.push(videoGallery);
+  children.push(textDisplay(`## ${i18n.quest_info}`));
+  children.push(
+    textDisplay(
+      `**${i18n.duration}:** ${durationStr}\n**${i18n.game}:** ${gameTitle} (${gamePublisher})\n**${i18n.application}:** [${applicationName}](${applicationLink}) (\`${applicationId}\`)`
+    )
+  );
+  children.push(separator());
+
+  children.push(textDisplay(`## ${i18n.tasks}`));
+  children.push(textDisplay(`${i18n.task_condition[taskCondition] || i18n.task_condition.or}\n${taskList}`));
+  children.push(separator());
+
+  pushRewardSection(children, {
+    rewardIconUrl,
+    rewardBody: `**${i18n.reward_type}:** ${rewardType}${decorExpires}\n**${i18n.sku_id}:** \`${skuId}\`\n**${i18n.reward_name.normal}:** ${rewardName}${extraReward}\n**${i18n.reward_expires}:** ${rewardExpires}`,
+  });
+
+  if (videoUrl) {
+    children.push(separator());
+    children.push({ type: 12, items: [{ media: { url: videoUrl }, description: applicationName }] });
+  }
 
   children.push(separator());
-  children.push(textDisplay(`**${i18n.quest_id || 'ID Nhiệm vụ'}**: \`${questId}\``));
-  children.push(separator());
-  children.push(openQuestButtonRow(questLink));
+  children.push(textDisplay(`${i18n.quest_id}: \`${questId}\``));
 
   const payload = {
     flags: IS_COMPONENTS_V2,
-    components: [{ type: 17, accent_color: 0x2f3136, components: children }],
+    username: i18n.name,
+    avatar_url: assets?.avatarWebhook,
+    components: [{ type: 17, components: children }],
   };
 
   return { payload, attachments: [] };
 }
 
-/**
- * Build the message payload for an updated quest.
- * Returns { payload, attachments: [] }.
- */
 export async function buildUpdatedQuestEmbed(content, oldQuest, newQuest, assets, changes) {
   const config = newQuest?.config;
   if (!config) return null;
+  const oldConfig = oldQuest?.config || {};
 
   const questId = newQuest.id || '';
   const questName = config.messages?.quest_name || i18n.error.new_quest;
   const questLink = `https://canary.discord.com/quests/${questId}`;
-  const restartNote = i18n.note_restart_app || 'Nếu không thấy nhiệm vụ trong app, thử khởi động lại ứng dụng.';
+  const restartNote = i18n.note_restart_app || 'Nếu như không thấy nhiệm vụ trong app Discord, trước hết phải khởi động lại ứng dụng. Nếu vẫn không thấy thì fake IP sang US, UK, v.v. Chúng tôi sẽ gửi thông báo về yêu cầu về IP vào mỗi buổi trưa (nếu có).';
 
-  const { heroUrl, videoUrl } = await resolveAssetUrls(config, assets, questId);
+  const heroPath = await resolveAssetPath(config.assets?.hero || config.assets?.quest_bar_hero, questId);
+  const heroUrl = buildCdnUrl(heroPath) || assets?.discordQuests || null;
+  const videoUrl = extractTaskVideoUrl(config.task_config_v2?.tasks);
 
-  const changeDescription =
-    buildChangeDescription(oldQuest, newQuest, changes) || (i18n.no_changes || 'Không có thay đổi');
+  const fmt = (label, oldVal, newVal) => `**${label}:** ${i18n.changed_from} ${oldVal} ${i18n.changed_to} ${newVal}`;
+  const changeLines = [];
+  if (changes?.expires_at) {
+    changeLines.push(fmt(i18n.expires_at_changed, formatDate(oldConfig.expires_at), formatDate(config.expires_at)));
+  }
+  if (changes?.starts_at) {
+    changeLines.push(fmt(i18n.starts_at_changed, formatDate(oldConfig.starts_at), formatDate(config.starts_at)));
+  }
+  if (changes?.reward) {
+    const oldReward = oldConfig.rewards_config?.rewards?.[0]?.messages?.name || i18n.error.reward;
+    const newReward = config.rewards_config?.rewards?.[0]?.messages?.name || i18n.error.reward;
+    changeLines.push(fmt(i18n.reward_changed, oldReward, newReward));
+  }
+  if (changes?.task_count) {
+    const oldCount = Object.keys(oldConfig.task_config_v2?.tasks || {}).length;
+    const newCount = Object.keys(config.task_config_v2?.tasks || {}).length;
+    changeLines.push(fmt(i18n.task_count_changed, oldCount, newCount));
+  }
+  const changesText = changeLines.length ? changeLines.join('\n') : i18n.no_changes || 'Không có thay đổi';
 
-  const headerLines = [];
-  if (PING_ROLE_ID) headerLines.push(`<@&${PING_ROLE_ID}>`);
-  else if (content) headerLines.push(content);
-  headerLines.push(`# ${i18n.updated_quest_header || 'Nhiệm vụ được cập nhật'} - ${questName}`);
+  const children = [];
+  if (PING_ROLE_ID) children.push(textDisplay(`<@&${PING_ROLE_ID}>`));
+  else if (content) children.push(textDisplay(content));
 
-  const children = [textDisplay(headerLines.join('\n'))];
+  children.push(textDisplay(`# ${i18n.updated_quest} - [${questName}](${questLink})`));
 
-  const gallery = mediaGallery(
-    heroUrl && { url: heroUrl, description: questName },
-    videoUrl && { url: videoUrl, description: `${questName} - video` }
-  );
-  if (gallery) children.push(gallery);
+  if (heroUrl) children.push({ type: 12, items: [{ media: { url: heroUrl }, description: questName }] });
 
   children.push(separator());
   children.push(textDisplay(`*${restartNote}*`));
   children.push(separator());
-  children.push(textDisplay([`**${i18n.changes || 'Thay đổi'}**`, changeDescription].join('\n')));
+
+  children.push(textDisplay(`## ${i18n.changes_detected}`));
+  children.push(textDisplay(changesText));
+
+  if (videoUrl) {
+    children.push(separator());
+    children.push({ type: 12, items: [{ media: { url: videoUrl }, description: questName }] });
+  }
+
   children.push(separator());
-  children.push(textDisplay(`**${i18n.quest_id || 'ID Nhiệm vụ'}**: \`${questId}\``));
-  children.push(separator());
-  children.push(openQuestButtonRow(questLink));
+  children.push(textDisplay(`${i18n.quest_id}: \`${questId}\``));
 
   const payload = {
     flags: IS_COMPONENTS_V2,
-    components: [{ type: 17, accent_color: 0xffcc00, components: children }],
+    username: i18n.name,
+    avatar_url: assets?.avatarWebhook,
+    components: [{ type: 17, components: children }],
   };
 
   return { payload, attachments: [] };
