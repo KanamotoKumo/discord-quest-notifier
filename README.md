@@ -6,7 +6,7 @@
 
 Track new Discord Quests and changes in real-time. Get notified every 5 minutes when a new quest appears or when quest details are updated.
 
-![Status](https://img.shields.io/badge/Status-Working-brightgreen)
+![Status](https://img.shields.io/badge/Status-Fixing-yellow)
 ![Node](https://img.shields.io/badge/Node-20+-blue)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
@@ -189,19 +189,14 @@ The `state.json` file automatically tracks all active quests:
 
 **⚠️ Files are written atomically to state.tmp.json first, then renamed to state.json. This prevents data corruption if the script crashes.*
 ## 🔄 Quest Change Detection
-The tracker automatically detects and reports these changes:
-
-✅ Deadline Changes (expires_at)
-
-✅ Start Date Changes (starts_at)
-
-✅ Reward Expiration Changes
-
-✅ Task Count Changes
-
-✅ Reward Type Changes
-
-✅ SKU ID Changes
+The tracker automatically detects and reports these changes:   
+✅ Deadline Changes (expires_at)   
+✅ Start Date Changes (starts_at)   
+✅ Reward Expiration Changes   
+✅ Task Count Changes   
+✅ Reward Type Changes   
+✅ SKU ID Changes   
+✅ … (More automatically detects)   
 
 Each update generates a separate notification highlighting exactly what changed.
 ## 🌍 Supported Languages
@@ -219,6 +214,7 @@ Set `LOCALE` environment variable to switch languages.
 | `REPOSITORY` | ✅ | `-` | Repository in format `owner/repo` |
 | `LOCALE` | ❌ | `en-US` | Language: `en-US` or `vi-VN`
 | `PING_ROLE_ID` | ❌ | `-` | Discord role ID to mention on new quests |
+| `PROXY_LIST_URL` | ❌ | `-` | Recommend to check quest(s) hidden |
 ## 📦 Assets
 The project uses assets from the `assets/` directory on your repository:
 
@@ -229,18 +225,18 @@ The project uses assets from the `assets/` directory on your repository:
 **Token Issues**
 **Error**: `Discord API 401: Unauthorized`
 
-❌ Token is invalid or expired
-✅ Generate a new user token (go to Discord DevTools Console: `localStorage.token`)
-**Webhook Errors**
-**Error**: `Webhook error 404`
+❌ Token is invalid or expired   
+✅ Generate a new user token (go to Discord DevTools Console: `localStorage.token`)   
+**Webhook Errors**   
+**Error**: `Webhook error 404`   
 
-❌ Webhook URL is incorrect or deleted
-✅ Recreate the webhook in Discord and update secrets
-**State Issues**
+❌ Webhook URL is incorrect or deleted   
+✅ Recreate the webhook in Discord and update secrets   
+**State Issues**   
 **Issue**: `Bot stops sending notifications`
 
-❌ state.json is corrupted
-✅ Delete `state.json` - it will be recreated on next run 
+❌ state.json is corrupted   
+✅ Delete `state.json` - it will be recreated on next run   
 ## 🤝 Contributing
 Feel free to submit issues and enhancement requests!
 ## 😍 Acknowledgements
