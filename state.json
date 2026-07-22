@@ -554,7 +554,104 @@
       "expires_at": "2026-09-03T00:00:00+00:00",
       "sent_at": "2026-07-21T19:24:09.020Z",
       "type": "new"
+    },
+    "1525222987165597817": {
+      "id": "1525222987165597817",
+      "config": {
+        "id": "1525222987165597817",
+        "config_version": 2,
+        "starts_at": "2026-07-22T17:00:00+00:00",
+        "expires_at": "2026-08-05T00:00:00+00:00",
+        "features": [
+          15
+        ],
+        "application": {
+          "link": "https://store.steampowered.com/app/3722330/Shift_At_Midnight/",
+          "id": "1445976735597330513",
+          "name": "Shift At Midnight"
+        },
+        "assets": {
+          "hero": "quests/1525222987165597817/1525224175323582485.jpg",
+          "hero_video": "quests/1525222987165597817/1525224752921317486_720.mp4",
+          "quest_bar_hero_blurhash": "TQgGFIJAOWnBhlqCiUkKaySQJw==",
+          "quest_bar_hero": "quests/1525222987165597817/1525224175323582485.jpg",
+          "quest_bar_hero_video": "quests/1525222987165597817/1525224628920778832_720.mp4",
+          "game_tile": "PLACEHOLDER",
+          "logotype": "PLACEHOLDER",
+          "game_tile_light": "quests/1525222987165597817/1525224175722299422.png",
+          "game_tile_dark": "quests/1525222987165597817/1525224175722299422.png",
+          "logotype_light": "quests/1525222987165597817/1526655147785322516.png",
+          "logotype_dark": "quests/1525222987165597817/1525224175231307908.png"
+        },
+        "colors": {
+          "primary": "#4752C4",
+          "secondary": "#000000"
+        },
+        "messages": {
+          "quest_name": "Shift At Midnight",
+          "game_title": "Shift At Midnight",
+          "game_publisher": "Kwalee"
+        },
+        "task_config_v2": {
+          "tasks": {
+            "PLAY_ON_DESKTOP": {
+              "type": "PLAY_ON_DESKTOP",
+              "target": 900,
+              "applications": [
+                {
+                  "id": "1445976735597330513"
+                }
+              ]
+            },
+            "PLAY_ON_XBOX": {
+              "type": "PLAY_ON_XBOX",
+              "target": 900,
+              "applications": [
+                {
+                  "id": "1445976735597330513"
+                }
+              ],
+              "external_ids": [
+                "2050201640"
+              ]
+            }
+          },
+          "join_operator": "or"
+        },
+        "rewards_config": {
+          "assignment_method": 1,
+          "rewards": [
+            {
+              "type": 4,
+              "sku_id": "1287881739531976815",
+              "messages": {
+                "name": "700 Orbs",
+                "name_with_article": "700 Orbs",
+                "redemption_instructions_by_platform": {
+                  "0": "PLACEHOLDER"
+                }
+              },
+              "orb_quantity": 700,
+              "premium_orb_quantity": 840
+            }
+          ],
+          "rewards_expire_at": "2026-09-04T00:00:00+00:00",
+          "platforms": [
+            0
+          ]
+        },
+        "share_policy": "shareable_everywhere",
+        "cta_config": {
+          "link": "https://store.steampowered.com/app/3722330/Shift_At_Midnight/",
+          "button_label": "Chơi Game"
+        }
+      },
+      "hash": "eyJxdWVzdF9uYW1lIjoiU2hpZnQgQXQgTWlkbmlnaHQiLCJnYW1lX3RpdGxlIjoiU2hpZnQgQXQgTWlkbmlnaHQiLCJnYW1lX3B1Ymxpc2hlciI6Ikt3YWxlZSIsImFwcGxpY2F0aW9uX2lkIjoiMTQ0NTk3NjczNTU5NzMzMDUxMyIsImFwcGxpY2F0aW9uX25hbWUiOiJTaGlmdCBBdCBNaWRuaWdodCIsInN0YXJ0c19hdCI6IjIwMjYtMDctMjJUMTc6MDA6MDArMDA6MDAiLCJleHBpcmVzX2F0IjoiMjAyNi0wOC0wNVQwMDowMDowMCswMDowMCIsInJld2FyZF9leHBpcmVzX2F0IjoiMjAyNi0wOS0wNFQwMDowMDowMCswMDowMCIsImZlYXR1cmVzIjpbMTVdLCJwbGF0Zm9ybXMiOlsiUEMiLCJYYm94Il0sInRhc2tzIjpbeyJrZXkiOiJQTEFZX09OX0RFU0tUT1AiLCJ0eXBlIjoiUExBWV9PTl9ERVNLVE9QIiwidGFyZ2V0Ijo5MDB9LHsia2V5IjoiUExBWV9PTl9YQk9YIiwidHlwZSI6IlBMQVlfT05fWEJPWCIsInRhcmdldCI6OTAwfV19",
+      "starts_at": "2026-07-22T17:00:00+00:00",
+      "expires_at": "2026-09-04T00:00:00+00:00",
+      "sent_at": "2026-07-22T19:21:20.648Z",
+      "type": "new"
     }
   },
-  "last_check": "2026-07-22T16:20:27.670Z"
+  "last_check": "2026-07-22T19:21:21.750Z"
 }
